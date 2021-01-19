@@ -15,6 +15,10 @@ def message_pretify(champion_info):
     f"{champion_info['strong_against']}\n"
     f'-----------------------------------\n'
     f'Champion is Weak Against:\n'
-    f"{champion_info['weak_against']}"
+    f"{champion_info['weak_against']}\n"
+    f'-----------------------------------\n'
+    f'Champion runes:\n'
+    f"{champion_info['core_runes']}\n"
+    f"{champion_info['extra_runes']}\n"
     )
     return message

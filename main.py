@@ -11,7 +11,8 @@ dp = Dispatcher(bot)
 
 @dp.message_handler()
 async def role(message: types.Message):
-    
+
+    logger.info(f'{message.text}')
     champion = get_translated_name(message.text.lower())
 
     if champion == None:
