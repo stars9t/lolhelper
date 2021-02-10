@@ -36,9 +36,9 @@ def request_champion(champion_name: str) -> BeautifulSoup:
 
 
 @base_exception
-def get_all_champion_info(champion_name) -> dict:
+def get_all_champion_info(champion_name: str) -> dict:
     """
-    Get all information about a champion
+    Get all information about a champion.
     """
     data = request_champion(champion_name)
 

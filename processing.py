@@ -1,45 +1,41 @@
-from typing import List, Dict
-
 from requests import base_exception
 
 
 @base_exception
-def message_pretify(champion_info):
-    roles = items_to_text(champion_info['roles'])
-    core_w = items_to_text(champion_info['core_weapons'])
-    late_w = items_to_text(champion_info['late_weapons'])
-    strong_a = items_to_text(champion_info['strong_against'])
-    weak_a = items_to_text(champion_info['weak_against'])
-    c_runes = runes_to_text(champion_info['core_runes'])
-    e_runes = runes_to_text(champion_info['extra_runes'])
-
+def message_prettify(champion):
+    """
+    Beautiful formatting text.
+    """
     message = (
     f'-----------------------------------\n'
-    f"Name: {champion_info['name']}\n"
+    f"Name: {champion.name}\n"
     f'-----------------------------------\n'
-    f'Role: {roles}\n'
+    f'Role: {champion.roles}\n'
     f'-----------------------------------\n'
     f'Core weapons:\n\n'
-    f"{core_w}\n"
+    f"{champion.core_weapons}\n"
     f'-----------------------------------\n'
     f'Luxury weapons:\n\n'
-    f'{late_w}\n'
+    f'{champion.late_weapons}\n'
     f'-----------------------------------\n'
     f'Champions is Strong Against:\n\n'
-    f'{strong_a}\n'
+    f'{champion.strong_against}\n'
     f'-----------------------------------\n'
     f'Champion is Weak Against:\n\n'
-    f'{weak_a}\n'
+    f'{champion.weak_against}\n'
     f'-----------------------------------\n'
     f'Champion runes:\n'
-    f'{c_runes}\n'
-    f'{e_runes}\n'
+    f'{champion.core_runes}\n'
+    f'{champion.extra_runes}\n'
     )
     return message
 
 
-def items_to_text(items: List) -> str:
-    """Converting more items to text for easy use in prettify"""
+def items_to_text(items: list) -> str:
+    """
+    Converting more items to text for
+    easy use in prettify.
+    """
     output = ''
     for item in items:
         output += item + ', '
@@ -47,8 +43,11 @@ def items_to_text(items: List) -> str:
     return output[:-2]
 
 
-def runes_to_text(runes: Dict) -> str:
-    """Converting runes to text for easy use in prettify"""
+def runes_to_text(runes: dict) -> str:
+    """
+    Converting runes to text for
+    easy use in prettify.
+    """
     output = f'{runes["branch_name"]}:\n\n'
 
     for rune in runes['runes']:
