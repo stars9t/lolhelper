@@ -38,7 +38,7 @@ async def champion_info(message: types.Message) -> None:
 if __name__ == '__main__':
     # Create a loop to add an update with time.sleep.
     loop = asyncio.get_event_loop()
-    loop.create_task(update_database(10, 3, True))
+    loop.create_task(update_database(168, 30, True))
     # Start bot
     executor.start_polling(dp, skip_updates=False, loop=loop)
 

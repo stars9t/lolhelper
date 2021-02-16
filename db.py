@@ -29,6 +29,7 @@ def get_link_name(name: str) -> Union[Model, bool]:
     except DoesNotExist:
         try:
             champion_link = ChampionLink.get(link_name=name)
+            return champion_link.link_name
         except DoesNotExist:
             return False
     finally:
