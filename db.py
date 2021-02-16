@@ -76,4 +76,24 @@ def get_champion_db(link_name: str) -> Union[Model, bool]:
         logger.warning(f"DB!{__name__}: {e}")
     finally:
         database.close()
-    
+
+
+@base_exception
+def get_all_champions_links() -> Union[set, bool]:
+    """
+    Get links to all champions to update the database
+    """
+    champions = set()
+
+    try:
+      database.connection()
+      query = ChampionLink.select().dicts()
+      for i in query:
+        champions.add(i['link_name'])
+    except Exception as e:
+      logger.warning(f"DB!{__name__}: {e}")
+      return False
+    finally:
+      database.close()
+
+    return champions

@@ -1,10 +1,12 @@
 from aiogram import Bot, Dispatcher, executor, types
+import asyncio
 
 from config import API_TOKEN
 from db import get_link_name, get_champion_db, upsert_champion_info
 from processing import message_prettify
 from requests import get_all_champion_info
 from exceptions import base_exception
+from updater import update_database
 
 
 bot = Bot(token=API_TOKEN)
@@ -34,4 +36,9 @@ async def champion_info(message: types.Message) -> None:
 
 
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=False)
+    # Create a loop to add an update with time.sleep.
+    loop = asyncio.get_event_loop()
+    loop.create_task(update_database(10, 3, True))
+    # Start bot
+    executor.start_polling(dp, skip_updates=False, loop=loop)
+
