@@ -5,7 +5,7 @@ from logs import logger
 
 def base_exception(fn):
     """
-    Standart decorator for except all exceptions and 
+    Standard decorator for except all exceptions and
     write error message in log.
     """
     @functools.wraps(fn)

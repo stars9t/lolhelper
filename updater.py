@@ -30,7 +30,7 @@ async def update_database(update_period: int, insertion_period: int,
         if champions:
             for link_name in champions:
                 champion_info = get_all_champion_info(link_name)
-                status = upsert_champion_info(champion_info, link_name)
+                upsert_champion_info(champion_info, link_name)
                 if insertion_period < 15:
                     insertion_period = 15
                 if log:
@@ -41,4 +41,5 @@ async def update_database(update_period: int, insertion_period: int,
         if update_period < 24:
             update_period = 24
 
+        logger.info(f"{__name__} - Database updated completed")
         await asyncio.sleep(update_period)

@@ -43,16 +43,16 @@ def upsert_champion_info(info: dict, link_name: str) -> bool:
     """
     try:
         database.connect()
-        new_champion = Champion.insert(
-            link_name = link_name,
-            name = info['name'],
-            roles = items_to_text(info['roles']), 
-            core_weapons = items_to_text(info['core_weapons']),
-            late_weapons = items_to_text(info['late_weapons']),
-            strong_against = items_to_text(info['strong_against']),
-            weak_against = items_to_text(info['weak_against']),
-            core_runes = runes_to_text(info['core_runes']),
-            extra_runes = runes_to_text(info['extra_runes'])
+        Champion.insert(
+            link_name=link_name,
+            name=info['name'],
+            roles=items_to_text(info['roles']),
+            core_weapons=items_to_text(info['core_weapons']),
+            late_weapons=items_to_text(info['late_weapons']),
+            strong_against=items_to_text(info['strong_against']),
+            weak_against=items_to_text(info['weak_against']),
+            core_runes=runes_to_text(info['core_runes']),
+            extra_runes=runes_to_text(info['extra_runes'])
         ).on_conflict_replace().execute()
         return True
     except Exception as e:
@@ -87,14 +87,14 @@ def get_all_champions_links() -> Union[set, bool]:
     champions = set()
 
     try:
-      database.connection()
-      query = ChampionLink.select().dicts()
-      for i in query:
-        champions.add(i['link_name'])
+        database.connection()
+        query = ChampionLink.select().dicts()
+        for i in query:
+            champions.add(i['link_name'])
     except Exception as e:
-      logger.warning(f"DB!{__name__}: {e}")
-      return False
+        logger.warning(f"DB!{__name__}: {e}")
+        return False
     finally:
-      database.close()
+        database.close()
 
     return champions

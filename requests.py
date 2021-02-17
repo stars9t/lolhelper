@@ -1,6 +1,6 @@
 import urllib3
 from bs4 import BeautifulSoup
-from urllib3 import HTTPResponse
+
 
 from config import HEADERS
 from exceptions import base_exception 
