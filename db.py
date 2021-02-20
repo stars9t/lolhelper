@@ -84,17 +84,13 @@ def get_all_champions_links() -> Union[set, bool]:
     """
     Get links to all champions to update the database
     """
-    champions = set()
-
     try:
         database.connection()
         query = ChampionLink.select().dicts()
-        for i in query:
-            champions.add(i['link_name'])
+        champions = {champion['link_name'] for champion in query}
+        return champions
     except Exception as e:
         logger.warning(f"DB!{__name__}: {e}")
         return False
     finally:
         database.close()
-
-    return champions

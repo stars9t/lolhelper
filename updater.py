@@ -8,7 +8,7 @@ from logs import logger
 
 @base_exception
 async def update_database(update_period: int, insertion_period: int,
-                               log: bool = False) -> None:
+                          log: bool = False) -> None:
     """
     We update the database, as information about characters changes
     from time to time.
@@ -22,24 +22,33 @@ async def update_database(update_period: int, insertion_period: int,
     :param log: Whether to write data about character
     insertion into the logs. False by default
     """
+    update_period *= 3600
+    if update_period < 24:
+        update_period = 25
     
     while True:
         logger.info(f"{__name__}: Start updating database")
         champions = get_all_champions_links()
 
         if champions:
-            for link_name in champions:
-                champion_info = get_all_champion_info(link_name)
-                upsert_champion_info(champion_info, link_name)
-                if insertion_period < 15:
-                    insertion_period = 15
-                if log:
-                    logger.info(f"{__name__} - insert champion {link_name}")
-                await asyncio.sleep(insertion_period)
-
-        update_period *= 3600
-        if update_period < 24:
-            update_period = 24
+            await update_champions(insertion_period, champions, log)
 
         logger.info(f"{__name__} - Database updated completed")
         await asyncio.sleep(update_period)
+
+
+@base_exception
+async def update_champions(insertion_period: int, champions: set,
+                     log: bool = False) -> None:
+
+    if insertion_period < 15:
+        insertion_period = 15
+
+    for link_name in champions:
+        champion_info = get_all_champion_info(link_name)
+        upsert_champion_info(champion_info, link_name)
+
+        if log:
+            logger.info(f"{__name__} - insert champion {link_name}")
+
+        await asyncio.sleep(insertion_period)

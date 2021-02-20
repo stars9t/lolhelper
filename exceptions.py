@@ -13,5 +13,5 @@ def base_exception(fn):
         try:
             return fn(*args, **kwargs)
         except Exception as e:
-            logger.warning(f'Ошибка парсинга, {__name__}: {e}')
+            logger.warning(f'{fn.__module__}.py: {fn.__name__}: {e}')
     return inner
